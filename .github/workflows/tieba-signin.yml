@@ -12,6 +12,8 @@ jobs:
 
     env:
       TZ: Asia/Shanghai  # 设置时区为中国标准时间
+      # 👇 就是加了这一行，消除 Node.js 20 警告
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: 检出代码
@@ -20,7 +22,7 @@ jobs:
       - name: 设置 Node.js 环境
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'  # 👈 也升级成支持的版本，更稳定
           
       - name: 安装依赖
         run: npm ci
@@ -52,4 +54,4 @@ jobs:
         if: always()
         run: |
           echo "当前时间: $(date "+%Y/%m/%d %H:%M:%S")"
-          echo "工作流执行状态: ${{ job.status }}" 
+          echo "工作流执行状态: ${{ job.status }}"
